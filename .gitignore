@@ -1,2 +1,13 @@
 Makefile
-lazy.pbc
+
+*.pbc
+*.c
+*.o
+*.obj
+*.iss
+*.exe
+lazy
+installable_lazy
+
+man
+*.tmp
