@@ -48,7 +48,7 @@ installable_lazy@exe@: lazy.pbc
 	$(PBC_TO_EXE) lazy.pbc --install
 
 # regenerate the Makefile
-Makefile: config/makefiles/root.in
+Makefile: build/templates/Makefile.in
 	$(PERL) Configure.pl
 
 # This is a listing of all targets, that are meant to be called by users
