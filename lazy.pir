@@ -27,6 +27,7 @@ And a lot of comments in the source - sorry.
 .sub _main :main
     .param pmc argv
 
+    load_bytecode 'dumper.pbc'
     .local int argc
     .local pmc in
 
@@ -527,8 +528,6 @@ not_num:
     deparse(expr)
     print "\n"
 .end
-
-.include "library/dumper.pir"
 
 # Local Variables:
 #   mode: pir

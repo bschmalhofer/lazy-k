@@ -1,6 +1,18 @@
 This is an incomplete implementation of Lazy K - only 'ski parsing is
 done currently.
 
+Build and test:
+    $ parrot setup.pir clean
+    $ parrot setup.pir
+    $ parrot setup.pir test
+
+Show help:
+ $ parrot setup.pir help
+
+Generate a file for Plumage:
+ $ mkdir plumage
+ $ parrot setup.pir plumage > plumage/lazy_k.json
+
 Lazy K programs live in the same timeless Platonic realm as mathematical
 functions, what the Unlambda page calls "the blessed realm of the pure untyped
 lambda calculus."

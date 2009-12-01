@@ -1,6 +1,3 @@
-# Copyright (C) 2005-2009, The Perl Foundation.
-# $Id$
-
 =head1 NAME
 
 t/examples.t - testing the lazy-l code examples
@@ -26,18 +23,11 @@ use FindBin;
 use lib "$FindBin::Bin/../../../lib";
 
 use Test::More       tests => 2;
-use Parrot::Config   qw(%PConfig);
 use File::Spec       ();
 
 my $is_win32  = $^O eq 'MSWin32';
-my $parrot    = File::Spec->catfile( $FindBin::Bin,
-                                     File::Spec->updir(),
-                                     File::Spec->updir(),
-                                     File::Spec->updir(),
-                                     $PConfig{test_prog} );
-my $lazy_k    = $parrot . q{ } . File::Spec->catfile( $FindBin::Bin,
-                                                      File::Spec->updir(), 
-                                                      'lazy.pbc' );
+my $parrot    = 'parrot';
+my $lazy_k    = $parrot . q{ } . 'lazy.pbc';
 my $source_fn = 'examples/calc.lazy'; 
 my @test_cases = (
     [ 'calc.lazy', '2*4+3', "11\n" ],

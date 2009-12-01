@@ -1,5 +1,3 @@
-Makefile
-
 *.pbc
 *.c
 *.o
@@ -8,6 +6,5 @@ Makefile
 *.exe
 lazy
 installable_lazy
-
 man
 *.tmp
