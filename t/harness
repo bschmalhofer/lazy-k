@@ -1,6 +1,0 @@
-#! perl
-
-use strict;
-use warnings;
-
-use Parrot::Test::Harness language => 'lazy-k';
