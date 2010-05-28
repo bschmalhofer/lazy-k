@@ -41,7 +41,10 @@ No Configure step, no Makefile generated.
 
     $P2 = new 'Hash'
     $P2['parrot-lazy'] = 'lazy.pbc'
-    #$P0['installable_pbc'] = $P2
+    $P0['installable_pbc'] = $P2
+
+    # test
+    $P0['test_exec'] = 'perl'
 
     .tailcall setup(args :flat, $P0 :flat :named)
 .end
