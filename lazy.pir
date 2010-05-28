@@ -23,6 +23,7 @@ And a lot of comments in the source - sorry.
 
 =cut
 
+.loadlib 'io_ops'
 
 .sub _main :main
     .param pmc argv
