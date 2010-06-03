@@ -24,6 +24,7 @@ And a lot of comments in the source - sorry.
 =cut
 
 .loadlib 'io_ops'
+.include 'stdio.pasm'
 
 .sub _main :main
     .param pmc argv
@@ -48,11 +49,13 @@ And a lot of comments in the source - sorry.
     argc = argv
     # TODO -e, chained arguments
     if argc > 1 goto open_file
-    in = getstdin
+    $P0 = getinterp
+    in =  $P0.'stdhandle'(.PIO_STDIN_FILENO)
     goto run
 open_file:
     $S0 = argv[1]
-    in = open $S0, 'r'
+    in = new 'FileHandle'
+    in.'open'($S0, 'r')
     $I0 = defined in
     if $I0 goto run
     printerr "can't open '"
@@ -219,7 +222,7 @@ err:
     S = get_global "S"
     null NUL
 loop:
-    ch = read io, 1
+    ch = io.'read'(1)
     unless ch == '`' goto not_bq
 	op = parse(io)
 	arg = parse(io)
@@ -236,7 +239,7 @@ not_k:
 not_s:
     unless ch == '#' goto not_comment
     swallow:
-	ch = read io, 1
+	ch = io.'read'(1)
 	if ch != "\n" goto swallow
 	goto loop
 not_comment:
@@ -355,10 +358,11 @@ not_s1:
 	lhs[0] = expS2
 	.local pmc cc, k1c, s2ik1, i, io
 	.local string s
-	io = getstdin
+	$P0 = getinterp
+	io = $P0.'stdhandle'(.PIO_STDIN_FILENO)
 	$I0 = 256
 	unless io goto eof
-	s = read io, 1
+	s = io.'read'(1)
 	if s == '' goto eof
 	$I0 = ord s
     eof:
