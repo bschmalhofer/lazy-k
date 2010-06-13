@@ -23,9 +23,6 @@ And a lot of comments in the source - sorry.
 
 =cut
 
-.loadlib 'io_ops'
-.include 'stdio.pasm'
-
 .sub _main :main
     .param pmc argv
 
@@ -49,8 +46,7 @@ And a lot of comments in the source - sorry.
     argc = argv
     # TODO -e, chained arguments
     if argc > 1 goto open_file
-    $P0 = getinterp
-    in =  $P0.'stdhandle'(.PIO_STDIN_FILENO)
+    in = getstdin
     goto run
 open_file:
     $S0 = argv[1]
@@ -58,9 +54,11 @@ open_file:
     in.'open'($S0, 'r')
     $I0 = defined in
     if $I0 goto run
-    printerr "can't open '"
-    printerr $S0
-    printerr "' for reading."
+    .local pmc stderr
+    stderr = getstderr
+    print stderr, "can't open '"
+    print stderr, $S0
+    print stderr, "' for reading."
     exit 1
 run:
     .local pmc prog, e
@@ -126,7 +124,9 @@ put:
     if $I0 == -1 goto err
 	.return($I0)
 err:
-    printerr "invalid output format - not a number\n"
+    .local pmc stderr
+    stderr = getstderr
+    print stderr, "invalid output format - not a number\n"
     exit 3
 .end
 
@@ -247,9 +247,11 @@ not_comment:
     if ch == "\t" goto loop
     if ch == "\n" goto loop
     if ch == "\r" goto loop
-    printerr "unrecogniced char in program '"
-    printerr ch
-    printerr "'\n"
+    .local pmc stderr
+    stderr = getstderr
+    print stderr, "unrecogniced char in program '"
+    print stderr, ch
+    print stderr, "'\n"
     exit 1
 .end
 
@@ -358,8 +360,7 @@ not_s1:
 	lhs[0] = expS2
 	.local pmc cc, k1c, s2ik1, i, io
 	.local string s
-	$P0 = getinterp
-	io = $P0.'stdhandle'(.PIO_STDIN_FILENO)
+	io = getstdin
 	$I0 = 256
 	unless io goto eof
 	s = io.'read'(1)
@@ -392,7 +393,9 @@ not_s2:
 	$I0 = to_number(rhs)
 	inc $I0
 	if $I0 goto num_ok
-	    printerr "invalid Inc of non-number\n"
+	    .local pmc stderr
+	    stderr = getstderr
+	    print stderr, "invalid Inc of non-number\n"
 	    exit 1
 num_ok:
 	$P0 = new 'Integer'
@@ -403,12 +406,14 @@ num_ok:
 	.return()
 not_inc:
     unless type == expNum goto not_num
-	printerr "invalid apply of number\n"
+	stderr = getstderr
+	print stderr, "invalid apply of number\n"
 	exit 1
 not_num:
-    printerr "unknown expression: '"
-    printerr type
-    printerr "'\n"
+    stderr = getstderr
+    print stderr, "unknown expression: '"
+    print stderr, type
+    print stderr, "'\n"
     exit 1
     .return()
 .end
@@ -520,9 +525,11 @@ not_inc:
 	print $I0
 	.return()
 not_num:
-    printerr "unknown expression: '"
-    printerr type
-    printerr "'\n"
+    .local pmc stderr
+    stderr = getstderr
+    print stderr, "unknown expression: '"
+    print stderr, type
+    print stderr, "'\n"
     exit 1
     .return()
 .end
