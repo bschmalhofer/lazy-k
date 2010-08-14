@@ -363,6 +363,7 @@ not_s1:
 	io = getstdin
 	$I0 = 256
 	unless io goto eof
+        # TODO: reading a character from STDIN seems to be broken
 	s = io.'read'(1)
 	if s == '' goto eof
 	$I0 = ord s
