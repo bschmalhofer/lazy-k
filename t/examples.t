@@ -26,9 +26,7 @@ use Test::More       tests => 2;
 use File::Spec       ();
 
 my $is_win32  = $^O eq 'MSWin32';
-my $parrot    = 'parrot';
-my $lazy_k    = $parrot . q{ } . 'lazy.pbc';
-my $source_fn = 'examples/calc.lazy'; 
+my $lazy_k    = 'parrot lazy.pbc';
 my @test_cases = (
     [ 'calc.lazy', '2*4+3', "11\n" ],
     [ 'cat.lazy',  '2*4+3', "2*4+3\n" ],
